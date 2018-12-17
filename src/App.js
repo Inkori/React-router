@@ -1,26 +1,74 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  NavLink,
+  Redirect
+} from "react-router-dom";
+import Login from "./components/Login";
+import Main from "./components/Main";
+import "./App.css";
+
+// const User = ({ match }) => {
+//   return <div>User {match.paramsuserId}</div>;
+// };
+
+// const ConfirmLogin = () => {
+//   console.log(NavLink);
+//   return (
+
+//   );
+// };
+
+const ProtectedRoute = ({ cpmponent: Component, ...props }) => {
+  return props.isAuthenticated ? (
+    <Component {...props} />
+  ) : (
+    <Redirect to="/login" />
+  );
+};
+
+// const Main = () => {
+//   return (
+//     <Switch>
+//       {/* <ProtectedRoute path="/" component={Home} /> */}
+
+//       <Route path="/" component={Home} />
+//       {/* <ProtectedRoute path="/home/:userId" component={Home} isAuthenticated />
+//       <ProtectedRoute path="/users" component={Home} isAuthenticated /> */}
+
+//     </Switch>
+//   );
+// };
+// const MainHome = () => {
+//   return (
+//     <Switch>
+
+//     </Switch>
+//   );
+// };
+
+//<ProtectedRoute path={} component={} />
+//exact - чтобы не рендарилась хом по /
+
+const RouterApp = () => {
+  return (
+    <div>
+      <Switch>
+        {/* <Route path="/login" component={Login} /> */}
+        <Route path="/" component={Main} />
+      </Switch>
+    </div>
+  );
+};
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <BrowserRouter basename="/routeapp">
+        <RouterApp />
+      </BrowserRouter>
     );
   }
 }
